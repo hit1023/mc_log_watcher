@@ -1,14 +1,11 @@
 # mc_log_watcher
 
-Minecraftサーバーのログファイル（`latest.log`）をリアルタイムで監視し、プレイヤーの参加/退出をChatworkに自動通知するRust製の常駐ツールです。座標登録コマンド（`/addloc`）にも対応しています。
+Minecraftサーバーのログファイル（`latest.log`）をリアルタイムで監視し、プレイヤーの参加/退出をChatworkに自動通知するRust製の常駐ツールです。
 
 ## 機能
 
 - プレイヤーが参加した時: `👤 Player <名前> has joined.` をChatworkに投稿
 - プレイヤーが退出した時: `🚪 Player <名前> has left.` をChatworkに投稿
-- チャット欄で `/addloc <x> <y> <z> <world> <説明>` の形式のコマンドを検知すると:
-  - 座標データを外部API（`https://mc.s-quad.com/api/location`）にPOST
-  - Chatworkにも座標付きメッセージを投稿
 - 複数のMinecraftサーバーのログディレクトリを同時に監視可能（カンマ区切り）
 - ログファイルのローテーション（サイズ縮小・再作成）を検知して読み込み位置を自動リセット
 
@@ -95,16 +92,6 @@ services:
 ### 5. 動作確認
 
 対象のMinecraftサーバーに実際にログイン/ログアウトしてみて、指定したChatworkルームに通知が届くか確認してください。
-
-## 座標登録機能（`/addloc`）について
-
-Minecraftのチャット欄で以下の形式のコマンド（実行するプラグイン等は別途必要）を発言すると、座標がAPIとChatworkの両方に送信されます。
-
-```
-/addloc <x> <y> <z> <world名> <説明>
-```
-
-送信先のAPIエンドポイント（`https://mc.s-quad.com/api/location`）は `src/main.rs` 内に直書きされています。この機能を使わない場合は無視して構いません（送信に失敗してもエラーは無視され、通知動作全体には影響しません）。自分の環境で座標APIを用意する場合は、`src/main.rs` の `fastapi_url` を書き換えてください。
 
 ## トラブルシューティング
 
