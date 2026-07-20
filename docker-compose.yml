@@ -1,0 +1,10 @@
+services:
+  rcon-listener:
+    build: .
+    container_name: rcon-listener
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - LOG_DIRS=/opt/minecraft_server2/logs
+    volumes:
+      - /home/hit/docker/minecraft2/minecraft_data/logs:/opt/minecraft_server2/logs:ro
